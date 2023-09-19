@@ -1,10 +1,12 @@
 from cliente import menuCliente
+from utils import clear
 
 ## Main Function
 
 def main():
     op = 0
     run = True
+    clear()
     while(run == True):
         print("Seja bem vindo(a) ao sistema de gerenciamento de carteira de ações da Nuclea. Selecione uma das opções abaixo:")
         print("1 - Cliente")
@@ -16,6 +18,7 @@ def main():
         op = int(input("Digite a opção desejada: "))
 
         if(op == 1):
+            clear()
             menuCliente()
         elif(op == 2):
             pass
@@ -26,7 +29,7 @@ def main():
         elif(op == 5):
             run = False
         else:
+            clear()
             print("Opção inválida, tente novamente!")
-
 
 main()
