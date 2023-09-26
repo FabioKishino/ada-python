@@ -1,3 +1,4 @@
+from dataBase import *
 from utils import *
 
 # Nome, CPF, RG, Data de Nascimento, CEP, Número residência.
@@ -6,16 +7,15 @@ def cadastrarCliente():
         "Nome": input("Nome: "),
         "CPF": validaCPF(input("CPF: ")),
         "RG": validaRG(input("RG: ")),
-        "Nascimento": validaDataNascimento(input("Data de Nascimento: ")),
-        "CEP": input("CEP: "),
+        "Nascimento": validaDataNascimento(),
+        "CEP": buscarCEP(input("CEP: ")),
+        "Complemento": input("Complemento: "),
         "Número": int(input("Número da residência: "))
     }
 
     return cliente
 
 def menuCliente():
-    clientes = []
-
     while True:
         print("Menu Cliente")
         print("1 - Cadastrar Cliente")
@@ -28,16 +28,28 @@ def menuCliente():
 
         if (op == 1):
             clear()
+            # try:
             cliente = cadastrarCliente()
-            clientes.append(cliente)
+            insertDataBase(cliente)
+            # except:
+            # print("Erro ao cadastrar cliente, tente novamente!")
         elif (op == 2):
             pass
         elif (op == 3):
-            pass
+            try:
+                clear()
+                selectClienteDataBase(input("Digite o CPF do cliente que deseja buscar: "))
+            except:
+                print("Erro ao buscar cliente, tente novamente!")
         elif (op == 4):
-            pass
+            clear()
+            try:        
+                deleteDataBase(input("Digite o CPF do cliente que deseja deletar: "))
+            except:
+                print("Erro ao deletar cliente, tente novamente!")
         elif (op == 5):
-            print(clientes)
+            clear()
+            selectDataBase()
         elif (op == 6):
             clear()
             return

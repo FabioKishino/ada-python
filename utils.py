@@ -2,6 +2,7 @@ from datetime import datetime
 from validate_docbr import CPF
 import re
 import os
+import requests
 
 def clear():
     os.system('cls')
@@ -31,12 +32,33 @@ def validaRG(rg):
         else:
             rg = input("RG inválido, digite novamente: ")
 
-def validaDataNascimento(dataNascimento):
+def validaDataNascimento():
     while True:
-        dataConvertida = datetime.strptime(dataNascimento, '%d/%m/%Y').date()
-        dataAtual = datetime.now().date()
+        dataNascimento = input("Digite a data de nascimento (ex: dd/mm/yyyy): ")
+        try:    
+            dataConvertida = datetime.strptime(dataNascimento, '%d/%m/%Y').date()
+            dataAtual = datetime.now().date()
 
-        if dataConvertida < dataAtual:
-            return dataConvertida.strftime('%d/%m/%Y')
-        else:
-            dataNascimento = input("Data de nascimento inválida, digite novamente: ")
+            if dataConvertida < dataAtual:
+                return dataConvertida.strftime('%d/%m/%Y')
+            else:
+                print("Data inválida. A sua data de nascimento deve ser menor que a data atual ")
+        except ValueError as e:
+            print("Data de nascimento inválida. Voce recebeu o erro: " + str(e) + " digite novamente! ")
+            
+def buscarCEP(cep):
+  url = f'https://viacep.com.br/ws/{cep}/json/'
+  response = requests.get(url, verify=False)
+
+  if response.status_code == 200:
+    data = response.json()
+
+    endereco = {
+      "CEP": data['cep'],
+      "Logradouro": data['logradouro'],
+      "Bairro": data['bairro'],
+      "Cidade": data['localidade'],
+      "Estado": data['uf']
+    }
+
+    return endereco
