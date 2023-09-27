@@ -28,13 +28,13 @@ def menuCliente():
 
         if (op == 1):
             clear()
-            # try:
-            cliente = cadastrarCliente()
-            insertDataBase(cliente)
-            # except:
-            # print("Erro ao cadastrar cliente, tente novamente!")
+            try:
+                cliente = cadastrarCliente()
+                insertDataBase(cliente)
+            except:
+                print("Erro ao cadastrar cliente, tente novamente!")
         elif (op == 2):
-            pass
+            updateDataBase(input("Digite o CPF do cliente que deseja alterar: "))
         elif (op == 3):
             try:
                 clear()

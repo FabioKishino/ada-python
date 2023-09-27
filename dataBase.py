@@ -1,5 +1,5 @@
 import pyodbc
-from utils import clear
+from utils import *
 
 def retornaCursorDataBase():
     connection = pyodbc.connect(retornaStringConexaoDataBase())
@@ -96,13 +96,31 @@ def selectClienteDataBase(cpf):
 
     connection.commit()
 
-def updateDataBase(cliente):
+def updateDataBase(cpf):
+    updateCliente = {
+        "Nome": input("Nome: "),
+        "CPF": validaCPF(input("CPF: ")),
+        "RG": validaRG(input("RG: ")),
+        "Nascimento": validaDataNascimento(),
+        "CEP": buscarCEP(input("CEP: ")),
+        "Complemento": input("Complemento: "),
+        "Número": int(input("Número da residência: "))
+    }
+    
     cursor, connection = retornaCursorDataBase()
-    updateQuery = '''
-    UPDATE cliente 
-    SET nome = ?, cpf = ?, rg = ?, data_nascimento = ?, cep = ?, numero_residencia = ? 
-    WHERE cpf = cpf;
-    '''
-    values = (cliente['Nome'], cliente['CPF'], cliente['RG'], cliente['Nascimento'], cliente['CEP'], cliente['Número'])
-    cursor.execute(updateQuery)
+    updateQuery = "UPDATE cliente SET nome = ?, cpf = ?, rg = ?, data_nascimento = ?, cep = ?, logradouro = ?, complemento = ?, bairro = ?, cidade = ?, estado = ?, numero_residencia = ? WHERE cpf = '" + cpf + "';"
+ 
+    values = (updateCliente['Nome'], 
+              updateCliente['CPF'], 
+              updateCliente['RG'], 
+              updateCliente['Nascimento'], 
+              updateCliente['CEP']['CEP'], 
+              updateCliente['CEP']['Logradouro'], 
+              updateCliente['Complemento'], 
+              updateCliente['CEP']['Bairro'], 
+              updateCliente['CEP']['Cidade'], 
+              updateCliente['CEP']['Estado'], 
+              updateCliente['Número'])
+    
+    cursor.execute(updateQuery, values)
     connection.commit()
