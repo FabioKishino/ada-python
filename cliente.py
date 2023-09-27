@@ -33,26 +33,39 @@ def menuCliente():
                 insertDataBase(cliente)
             except:
                 print("Erro ao cadastrar cliente, tente novamente!")
+        
         elif (op == 2):
-            updateDataBase(input("Digite o CPF do cliente que deseja alterar: "))
-        elif (op == 3):
+            clear()
             try:
-                clear()
+                updateDataBase(input("Digite o CPF do cliente que deseja alterar: "))
+            except:
+                print("Erro ao alterar cliente, tente novamente!")
+        
+        elif (op == 3):
+            clear()
+            try:
                 selectClienteDataBase(input("Digite o CPF do cliente que deseja buscar: "))
             except:
                 print("Erro ao buscar cliente, tente novamente!")
+        
         elif (op == 4):
             clear()
             try:        
                 deleteDataBase(input("Digite o CPF do cliente que deseja deletar: "))
             except:
                 print("Erro ao deletar cliente, tente novamente!")
+        
         elif (op == 5):
             clear()
-            selectDataBase()
+            try:
+                selectDataBase()
+            except:
+                print("Erro ao listar clientes, tente novamente!")
+        
         elif (op == 6):
             clear()
             return
+        
         else:
             clear()
             print("Opção inválida, tente novamente!")
