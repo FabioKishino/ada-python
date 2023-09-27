@@ -1,7 +1,6 @@
 from dataBase import *
 from utils import *
 
-# Nome, CPF, RG, Data de Nascimento, CEP, Número residência.
 def cadastrarCliente():
     cliente = {
         "Nome": input("Nome: "),
